@@ -17,3 +17,5 @@ export const QUERY_ME = gql`
     }
   }
 `;
+
+// copied over from class activity 26 and altered
