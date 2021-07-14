@@ -4,6 +4,7 @@ import { QUERY_ME } from '../utils/queries';
 import { REMOVE_BOOK } from '../utils/mutations';
 import Auth from '../utils/auth';
 import { removeBookId } from '../utils/localStorage';
+import { ApolloClient } from '@apollo/client';
 
 const SavedBooks = () => {
   const { loading, data } = useQuery(QUERY_ME);
@@ -48,7 +49,7 @@ const SavedBooks = () => {
     }
 
     try {
-      const { data } = await removedBook({
+      const { data } = await removeBook({
         variables: { bookId }
       });
 
