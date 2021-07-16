@@ -24,7 +24,7 @@ const typeDefs = gql`
     user: User
   }
 
-  type Query {}
+  type Query {
     me: User
   }
 
