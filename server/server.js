@@ -3,25 +3,23 @@ const path = require('path');
 const { ApolloServer } = require('apollo-server-express');
 const db = require('./config/connection');
 const { typeDefs, resolvers } = require('./schemas');
-const { authMiddleware } = require ('./utils/auth');
-const  mongoose = require("mongoose");
+const { authMiddleware } = require('./utils/auth');
 const app = express();
+
 const PORT = process.env.PORT || 3001;
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: authMiddleware,
 });
-server.applyMiddleware({app});
+
+server.applyMiddleware({ app });
 
 
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/budget", {
-  useNewUrlParser: true,
-  useFindAndModify: false
-});
 // if we're in production, serve client/build as static assets
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
@@ -29,6 +27,6 @@ if (process.env.NODE_ENV === 'production') {
 
 db.once('open', () => {
   app.listen(PORT, () => console.log(`🌍 Now listening on localhost:${PORT}`),
-  console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`));
+    console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`));
 
 });
